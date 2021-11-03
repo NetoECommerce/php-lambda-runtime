@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ -z "${1}" ]; then
+    echo "Usage: ${0} handler.name [hostname] [port]"
+    echo
+    echo "    handler.name: The handler used in your Lambda environment"
+    echo "    hostname:     Web server hostname, defaults to localhost"
+    echo "    port:         Web server port, defaults to 80"
+    echo
+    exit 1
+fi
+
+DIR=$(dirname "${BASH_SOURCE[0]}")
+export _HANDLER="${1}"
+export _CONTEXT="cli-server"
+
+php -S "${2:-localhost}:${3:-80}" "${DIR}/router.php"

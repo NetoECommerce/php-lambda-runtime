@@ -1,0 +1,52 @@
+{
+    "name": "netolabs/php-lambda-runtime",
+    "description": "A library for running PHP code in AWS Lambda",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ben Plunkett",
+            "email": "me@benplunkett.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Neto\\Lambda\\": "src/Neto/Lambda"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Neto\\Lambda\\Test\\": "tests"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.3",
+        "ext-json": "*",
+        "psr/http-message": "1.0.*",
+        "psr/http-server-handler": "1.0.*",
+        "psr/http-server-middleware": "1.0.*",
+        "psr/container": "^1.0",
+        "guzzlehttp/guzzle": "6.3.*",
+        "ulrichsg/getopt-php": "^3.2",
+        "netolabs/simple-container": "^0.2.0",
+        "php-di/invoker": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "phake/phake": "3.1.*",
+        "squizlabs/php_codesniffer": "2.*"
+    },
+    "bin": [
+        "bin/invoke",
+        "bin/start_server",
+        "bin/router.php"
+    ],
+    "scripts": {
+        "test": [
+            "phpunit --testdox"
+        ],
+        "lint": [
+            "phpcs --standard=PSR2 src"
+        ]
+    }
+}

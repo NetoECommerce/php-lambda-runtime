@@ -1,0 +1,9 @@
+#!bin/php
+<?php
+
+// This file is intended to live in the root of a project's directory.
+// It is the file that will be executed in the AWS Lambda environment.
+// To run the lambda locally, see the invoke and start_server scripts.
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/app.php';

@@ -1,0 +1,10 @@
+steps:
+  - label: "Unit tests"
+    command: "composer install && composer test"
+    agents:
+      queue: staging
+
+  - label: "Code analysis"
+    command: "composer install && composer lint"
+    agents:
+      queue: staging

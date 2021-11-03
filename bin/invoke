@@ -1,0 +1,67 @@
+#!/usr/bin/env php
+<?php
+
+// require autoloader first
+$files = [
+     getcwd() . '/vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php', // composer dependency
+    __DIR__ . '/../vendor/autoload.php', // stand-alone package
+];
+foreach ($files as $file) {
+    if (is_file($file)) {
+        require_once $file;
+        break;
+    }
+}
+
+// get lambda handler and payload from the command arguments
+$getOpt = new \GetOpt\GetOpt([
+    [ 'h', 'handler', \GetOpt\GetOpt::OPTIONAL_ARGUMENT, 'Lambda handler name', '' ],
+    [ 'd', 'data', \GetOpt\GetOpt::OPTIONAL_ARGUMENT, 'JSON-encoded request body', '[]' ],
+    [ '?', 'help', \GetOpt\GetOpt::NO_ARGUMENT, 'Show this help and quit' ]
+]);
+
+try {
+    $getOpt->process();
+} catch (\GetOpt\ArgumentException $exception) {
+    fwrite(STDERR, $exception->getMessage() . PHP_EOL);
+    echo PHP_EOL . $getOpt->getHelpText();
+    exit;
+}
+
+if ($getOpt->getOption('help')) {
+    echo $getOpt->getHelpText();
+    exit;
+};
+
+$handler = $getOpt->getOption('handler');
+$payload = $getOpt->getOption('data');
+
+// put context into env vars for AppFactory to access
+putenv("_HANDLER=$handler");
+putenv("_PAYLOAD=$payload");
+putenv("_CONTEXT=cli");
+
+$startTime = microtime(true);
+
+// require the user's app definition
+$found = false;
+for ($i = 0; $i < 3; $i++) {
+
+    // traverses down the FS tree 3 times before stopping
+    $file = './' . str_repeat('../', $i) . 'app.php';
+
+    if (is_file($file)) {
+        $found = true;
+        require_once $file;
+        break;
+    }
+}
+
+if (!$found) {
+    fwrite(STDERR, 'Could not find app.php. Ensure you\'re running invoke from your project folder.' . PHP_EOL);
+}
+
+$endTime = microtime(true);
+echo PHP_EOL . "Duration: " . ($endTime - $startTime) . "ms" . PHP_EOL;
+
