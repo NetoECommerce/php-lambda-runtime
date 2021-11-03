@@ -7,7 +7,7 @@
 
 ## Installation
 
-Run `composer require netodev/php-lambda-runtime` from the root of your project.
+Run `composer require netolabs/php-lambda-runtime` from the root of your project.
 
 You'll need two files in root of your project for your application to work in Lambda, `bootstrap` and `app.php`.
 
