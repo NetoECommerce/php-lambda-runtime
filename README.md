@@ -98,3 +98,7 @@ There are two optional parameters, handler name (`-h`) and request body data (`-
 You can also use PHPs built-in web server to test and send requests to your lambda.
 Simply start the server by running `vendor/bin/start_server handler.name [hostname] [port]`.
 You can then send requests to your function via curl, eg: `curl --data '{"foo":"bar"}' localhost`
+
+## License
+
+The MIT License (MIT). Please see the [License File](https://github.com/NetoECommerce/php-lambda-runtime/blob/master/LICENSE) for more information.
